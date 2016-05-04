@@ -1,0 +1,35 @@
+#!/bin/sh
+
+   # Check number of parameters submitted (at least one is needed)
+    PARAMCOUNT=$#
+    while [ $# -ge 1 ]; do
+        case $1 in
+            # Helpers first
+            run)
+                CHECK_BINARIES=0
+                RUN_HELPERS=1
+                HELPER="audit"
+                RUN_PLUGINS=0
+                RUN_TESTS=0
+                if [ $# -ge 2 ]; then
+                    case $2 in
+                        "linters")
+                            MODE="run-linters"
+                        ;;
+                        "unit-tests")
+                            MODE="run-unit-tests"
+                        ;;
+                    esac
+                  else
+                    echo "Error: Need a target to run"
+                    echo " "
+                    echo "Examples:"
+                    echo "$0 run linters"
+                    echo "$0 run tests"
+                    exit 1
+                fi
+            ;;
+        esac
+        shift
+    done
+

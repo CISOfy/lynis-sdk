@@ -1,0 +1,81 @@
+#!/bin/sh
+
+set -e
+set -u
+
+CONFIG_FILE="config"
+MODE="do-nothing"
+MY_USER_ID=$(id -u)
+VERBOSE=0
+
+# Lynis variables
+SHOW_WARNINGS_ONLY=0
+QUIET=0
+CRONJOB=0
+ECHOCMD="echo"
+YELLOW=""
+NORMAL=""
+SECTION="${YELLOW}"
+LOGFILE="./lynis-dev.log"
+
+if [ "${MY_USER_ID}" = "0" ]; then echo "Do not run this as root"; exit 1; fi
+if [ ! -f "${CONFIG_FILE}" ]; then echo "Could not open config file: ${CONFIG_FILE}"; exit 1; fi
+
+CHECK_VERBOSE=$(awk -F= '/^verbose=/ { print $2 }' ${CONFIG_FILE} | egrep -i "yes") && VERBOSE=1
+LYNIS_PATH=$(awk -F= '/^lynis-directory=/ { print $2 }' ${CONFIG_FILE})
+if [ "${LYNIS_PATH}" = "" -o ! -d "${LYNIS_PATH}" ]; then echo "Could not find the Lynis directory"; exit 1; fi
+
+
+echo "======================================================================"
+echo "Lynis directory:        ${LYNIS_PATH}"
+echo "Verbose:                $VERBOSE"
+echo "======================================================================"
+
+
+FUNCTIONS_FILE="${LYNIS_PATH}/include/functions"
+if [ -f "${FUNCTIONS_FILE}" ]; then
+    . ${FUNCTIONS_FILE}
+fi
+
+INCLUDE_FILES="./includes/parameters "
+for FILE in ${INCLUDE_FILES}; do
+    if [ -f ${FILE} ]; then
+        echo "Including ${FILE}"
+        . ${FILE}
+      else
+        echo "Fatal: could not find ${FILE}"
+        exit 1
+    fi
+done
+
+    case ${MODE} in
+        "do-nothing")
+        ;;
+        "run-linters")
+            echo "Running linters"
+            if [ -d ./linters ]; then
+                FILES=$(find ./linters -type f -name "linter-*")
+                for FILE in ${FILES}; do
+                    InsertSection "Linter - ${FILE}"
+                    . ${FILE}
+                done
+
+            fi
+        ;;
+        "run-unit-tests")
+        ;;
+    esac
+
+Display --text "test"
+
+
+
+#Tests using the double-bracket test operator, e.g. [[ "${SOMEVAR}" == "test value" ]]
+#Arrays, e.g. foo=( 1 2 3 )
+#The declare built-in command
+#Using the function keyword to define a shell function (you should never use this though, even with bash)
+#Brace expansion, e.g. echo {a,b}{c,d}
+
+
+
+# EOF
