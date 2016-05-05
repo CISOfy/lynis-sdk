@@ -1,48 +1,6 @@
-# Lynis Software Development Kit
-
-This project has three main goals:
-* Provide tips to contributing the Lynis project
-* Test the quality of the software
-* Get you started with custom tests and plugins
-
-
-## Getting Started
-
-Development for Lynis is easy, as the tool is written in shell script. Although we use a few external tools, usually you don't need them.
-
-Lynis uses the Bourne shell, usually /bin/sh on your system. Not to be confused with BASH (Bourne Again SHell). By adhering to the Bourne shell, the tool remains portable, and allows it to run on Linux, *BSD, Mac OSX, and others.
-
-*Lesson: portability is important for the project. Every test should be running on different UNIX-derivatives as well.*
-
-###
-
-Go to the directory where you want to develop
-
-cd my/dev/directory
-
-Clone both projects:
-
-```
-git clone https://github.com/CISOfy/lynis
-git clone https://github.com/CISOfy/lynis-sdk
-```
-
-Go to the SDK directory and run the development kit:
-
-```
-cd lynis-sdk
-./lynis-devkit
-```
-
-This should give you screen output
-
-With this kit you can perform quality checks, and test if everything works as expected. We encourage all developers and contributors to use this kit, especially before creating a pull request.
-
-
-
 # Structure
 
-Understanding the structure of the project is an important starting point
+Understanding the structure of the project is an important starting point.
 
 ## Directories
 In the tarball and on GitHub, you will see just a few directories.
