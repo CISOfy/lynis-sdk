@@ -73,6 +73,21 @@ done
         ;;
 
         "do-nothing")
+
+            echo ""; echo ""
+            echo "Help"
+            echo "============================="
+            echo ""
+            echo "Build Packages"
+            echo "  $0 build dpkg"
+            echo "  $0 build rpm"
+            echo ""
+            echo "Quality Testing"
+            echo "  $0 run linters"
+            echo "  $0 run unit-tests"
+            echo ""; echo ""
+
+
         ;;
         "run-linters")
             echo "Running linters"
