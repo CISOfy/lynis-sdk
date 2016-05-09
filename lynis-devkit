@@ -26,11 +26,16 @@ LYNIS_PATH=$(awk -F= '/^lynis-directory=/ { print $2 }' ${CONFIG_FILE})
 if [ "${LYNIS_PATH}" = "" -o ! -d "${LYNIS_PATH}" ]; then echo "Could not find the Lynis directory"; exit 1; fi
 
 
+if [ ! -f ${LYNIS_PATH}/lynis ]; then echo "Could not find Lynis (tried: ${LYNIS_PATH}/lynis)"; exit 1; fi
+LYNIS_VERSION=$(grep "PROGRAM_VERSION=" ${LYNIS_PATH}/lynis | awk -F= '{print $2}' | sed 's/"//g')
+
+
+
 echo "======================================================================"
 echo "Lynis directory:        ${LYNIS_PATH}"
+echo "Lynis version:          ${LYNIS_VERSION}"
 echo "Verbose:                $VERBOSE"
 echo "======================================================================"
-
 
 FUNCTIONS_FILE="${LYNIS_PATH}/include/functions"
 if [ -f "${FUNCTIONS_FILE}" ]; then

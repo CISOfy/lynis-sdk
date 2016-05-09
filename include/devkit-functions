@@ -22,10 +22,24 @@
           else
             echo "Warning: no check for packages performed"
         fi
+        DIRS="BUILD BUILDROOT RPMS SOURCES SRPMS"
+        for DIR in ${DIRS}; do
+            if [ ! -d ~/lynis-build/rpmbuild/${DIR} ]; then mkdir -p ~/lynis-build/rpmbuild/${DIR}; fi
+        done
+        ls -l ./tmp/lynis-build/rpmbuild
+        tar --create -z -f ~/lynis-build/rpmbuild/SOURCES/lynis-${LYNIS_VERSION}.tar.gz ../lynis/*
+        SDKShowLine
+        ls -l ./tmp/lynis-build/rpmbuild/SOURCES/lynis-${LYNIS_VERSION}.tar.gz
+        SDKShowLine
         rpmbuild -ba ./package-building/lynis.spec
+        SDKShowLine
+
     }
 
     SDKExitFatal() {
         echo "$1"
         exit 1
+    }
+    SDKShowLine() {
+        echo "==============================================================="
     }
