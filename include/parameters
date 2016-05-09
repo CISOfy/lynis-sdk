@@ -4,13 +4,34 @@
     PARAMCOUNT=$#
     while [ $# -ge 1 ]; do
         case $1 in
+            # Build
+            build)
+                if [ $# -ge 2 ]; then
+                    case $2 in
+                        "all")
+                            MODE="build-all"
+                        ;;
+                        "dpkg")
+                            MODE="build-dpkg"
+                        ;;
+                        "rpm")
+                            MODE="build-rpm"
+                        ;;
+
+                    esac
+                  else
+                    echo "Error: Need a target to run"
+                    echo " "
+                    echo "Examples:"
+                    echo "$0 build all"
+                    echo "$0 build dpkg"
+                    echo "$0 build rpm"
+                    exit 1
+                fi
+            ;;
+
             # Helpers first
             run)
-                CHECK_BINARIES=0
-                RUN_HELPERS=1
-                HELPER="audit"
-                RUN_PLUGINS=0
-                RUN_TESTS=0
                 if [ $# -ge 2 ]; then
                     case $2 in
                         "linters")
@@ -29,6 +50,8 @@
                     exit 1
                 fi
             ;;
+
+
         esac
         shift
     done

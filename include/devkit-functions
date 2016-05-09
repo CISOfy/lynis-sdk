@@ -1,0 +1,31 @@
+#!/bin/sh
+
+    SDKBuildPackageDPKG() {
+        if [ -x /usr/bin/dpkg ]; then
+            dpkg -l dpkg-dev | grep "^ii" | grep "dpkg-dev" > /dev/null || SDKExitFatal "Package 'dpkg-dev' not installed"
+            dpkg -l debhelper | grep "^ii" | grep "debhelper" > /dev/null || SDKExitFatal "Package 'debhelper' not installed"
+          else
+            echo "Warning: no check for packages performed"
+        fi
+        #apt-get install dpkg-dev
+        #apt-get install debhelper
+        #dpkgbuild-package -us -uc -b
+        echo "Building DPKG"
+        dpkg-buildpackage -b
+        echo " ----"
+    }
+
+    SDKBuildPackageRPM() {
+        echo "Building RPM"
+        if [ -x /usr/bin/dpkg ]; then
+            dpkg -l rpm | grep "^ii" | grep "rpm" > /dev/null || SDKExitFatal "Package 'rpm' not installed"
+          else
+            echo "Warning: no check for packages performed"
+        fi
+        rpmbuild -ba ./package-building/lynis.spec
+    }
+
+    SDKExitFatal() {
+        echo "$1"
+        exit 1
+    }

@@ -37,7 +37,12 @@ if [ -f "${FUNCTIONS_FILE}" ]; then
     . ${FUNCTIONS_FILE}
 fi
 
-INCLUDE_FILES="./includes/parameters "
+FUNCTIONS_FILE="./include/devkit-functions"
+if [ -f "${FUNCTIONS_FILE}" ]; then
+    . ${FUNCTIONS_FILE}
+fi
+
+INCLUDE_FILES="./include/parameters "
 for FILE in ${INCLUDE_FILES}; do
     if [ -f ${FILE} ]; then
         echo "Including ${FILE}"
@@ -49,6 +54,19 @@ for FILE in ${INCLUDE_FILES}; do
 done
 
     case ${MODE} in
+        "build-all")
+            SDKBuildPackageDPKG
+            SDKBuildPackageRPM
+        ;;
+
+        "build-dpkg")
+            SDKBuildPackageDPKG
+        ;;
+
+        "build-rpm")
+            SDKBuildPackageRPM
+        ;;
+
         "do-nothing")
         ;;
         "run-linters")
@@ -66,9 +84,8 @@ done
         ;;
     esac
 
-Display --text "test"
 
-
+Display --text "Quitting..."
 
 #Tests using the double-bracket test operator, e.g. [[ "${SOMEVAR}" == "test value" ]]
 #Arrays, e.g. foo=( 1 2 3 )
