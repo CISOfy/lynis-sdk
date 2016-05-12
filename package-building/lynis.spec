@@ -20,6 +20,12 @@
 #
 #################################################################################
 
+%if 0%{?el6}
+ %global bashcompdir /usr/share/bash-completion/
+%else
+ %global bashcompdir %(pkg-config --variable=completionsdir bash-completion)
+%endif
+
 # Build in home directory of the user
 %define _topdir         %{getenv:HOME}/lynis-build/rpmbuild
 %define _includedir     /usr/share/lynis/include
@@ -87,6 +93,10 @@ install plugins/* ${RPM_BUILD_ROOT}%{_pluginsdir}
 # Install database files
 install -d ${RPM_BUILD_ROOT}%{_dbdir}
 install db/* ${RPM_BUILD_ROOT}%{_dbdir}
+
+# Bash completion
+mkdir -p %{buildroot}%{bashcompdir}
+install -pm644 extras/bash_completion.d/lynis %{buildroot}%{bashcompdir}/
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "$RPM_BUILD_ROOT"
