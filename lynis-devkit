@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+#set -e
 set -u
 
 CONFIG_FILE="config"
@@ -101,6 +101,15 @@ done
             fi
         ;;
         "run-unit-tests")
+            FILES=$(find ./unit-tests -name "tests-*" -type f -print)
+            for FILE in ${FILES}; do
+                . ${FILE}
+                Assert
+                if [ $? -gt 0 ]; then
+                    echo "[X] One or more unit test failed"
+                    exit 1
+                fi
+            done
         ;;
     esac
 
