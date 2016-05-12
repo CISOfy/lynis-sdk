@@ -20,18 +20,19 @@
 #
 #################################################################################
 
-%if 0%{?el6}
- %global bashcompdir /usr/share/bash-completion/
-%else
- %global bashcompdir %(pkg-config --variable=completionsdir bash-completion)
-%endif
-
 # Build in home directory of the user
 %define _topdir         %{getenv:HOME}/lynis-build/rpmbuild
 %define _includedir     /usr/share/lynis/include
 %define _pluginsdir     /usr/share/lynis/plugins
 %define _dbdir          /usr/share/lynis/db
 %define _bindir         /usr/bin
+
+%if 0%{?el6}
+ %global _bashcompdir /usr/share/bash-completion/
+%else
+ %global _bashcompdir %(pkg-config --variable=completionsdir bash-completion)
+%endif
+
 
 Summary:                Security auditing tool for Linux, Mac OS X, and UNIX systems.
 Name:                   lynis
@@ -95,8 +96,8 @@ install -d ${RPM_BUILD_ROOT}%{_dbdir}
 install db/* ${RPM_BUILD_ROOT}%{_dbdir}
 
 # Bash completion
-mkdir -p %{buildroot}%{bashcompdir}
-install -pm644 extras/bash_completion.d/lynis %{buildroot}%{bashcompdir}/
+mkdir -p %{RPM_BUILD_ROOT}%{_bashcompdir}
+install -pm644 extras/bash_completion.d/lynis %{RPM_BUILD_ROOT}%{_bashcompdir}/
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "$RPM_BUILD_ROOT"
