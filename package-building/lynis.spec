@@ -3,14 +3,22 @@
 # Lynis spec file
 # -----------------
 #
-# This file helps to create your custom RPM package of Lynis.
+# This file helps to create a custom RPM package of Lynis.
 #
 # Usage:
-# - Adjust version number (Version:)
-# - Check if you have the directories in your home directory (or adjust topdir)
-# - rpmbuild -ba lynis.spec
 #
-# If RPM building fails, check the required tools to build packages.
+#   Option 1) Build with devkit
+#
+#   ./lynis-devkit build rpm
+#
+#
+#   Option 2) Manual build
+#
+#   - Adjust version number (Version:)
+#   - Check if you have the directories in your home directory (or adjust topdir)
+#   - rpmbuild -ba lynis.spec
+#
+#   If RPM building fails, check if the required tools are installed.
 #
 #################################################################################
 #
@@ -106,7 +114,7 @@ install -pm644 extras/bash_completion.d/lynis %{RPM_BUILD_ROOT}%{_bashcompdir}/
 %defattr(644,root,root,755)
 # Binaries
 %attr(755, root, root) %{_bindir}/lynis
-# Man page and docs
+# Documentation and lynis(8) man page
 %doc CHANGELOG FAQ LICENSE README
 %doc %{_mandir}/man8/lynis.8.gz
 # Default profile
@@ -121,7 +129,10 @@ install -pm644 extras/bash_completion.d/lynis %{RPM_BUILD_ROOT}%{_bashcompdir}/
 #%attr(644, root, root) %{_plugindir}/*
 
 %changelog
-* Mon May 09 2016 Michael Boelen - 2.2.0-1
+* Tue Jun 07 2016 Michael Boelen - 2.2.1-1
+- Adjusted comments
+
+* Mon May 09 2016 Michael Boelen - 2.2.0-2
 - Version bump
 
 * Mon Dec 21 2015 Michael Boelen - 2.2.0-1
