@@ -1,6 +1,6 @@
 # Code Guidelines
 
-Like any programming language, there are different ways to keep a project structured. It ranges from variable names, up to spacing. So we provide some guidelines to keep the structure and flexible enough for further expansion.
+Like any programming language, there are different ways to keep a project structured. It ranges from variable names, up to the usage of spacing. So we provide some guidelines to keep the code structured and flexible enough for further expansion.
 
 The Lynis project uses the following guidelines:
 
@@ -19,14 +19,12 @@ For good readability we try to keep line length at a maximum of 80 characters. L
 ### Pipelines
 Command chains (using "pipes", or |) should be done on a single line, unless the line gets too long (80+ characters). In such case split the command chain per command.
 
-```# Normal
-command1 | command2
+### Loops
+When using loops or statements like if, for, while, keep things on one line as possible.
 
-# Long command
-command1 \
-  | command2 \
-  | command3
-```
+```if [ ${TEST} -eq 1 ]; then echo "TEST"; fi```
+
+When multiple actions have to be taken, split them over different lines. However put the "; do" or "; then" on the first line.
 
 ## Naming Conventions
 
@@ -38,17 +36,9 @@ Examples:
 *FOUND*
 *SEARCH_DIRECTORY*
 
-
-
 ### Functions
 
 Functions use CamelCase with each word having its first letter uppercased. This way no external commands or built-ins of the shell will be used.
 
 Functions should be stored in include/functions as much as possible
-
-# Style
-
-* Indentation is done with 4 spaces (no tabs)
-* Variables are capitalized, optional with an underscore to "split" words
-
 
