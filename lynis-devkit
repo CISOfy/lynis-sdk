@@ -113,8 +113,8 @@ done
         ;;
     esac
 
-
-Display --text "Quitting..."
+printf "\n"
+Display --text "End of Program" --result "OK"
 
 #Tests using the double-bracket test operator, e.g. [[ "${SOMEVAR}" == "test value" ]]
 #Arrays, e.g. foo=( 1 2 3 )
