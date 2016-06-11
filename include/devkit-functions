@@ -40,6 +40,18 @@
         echo "$1"
         exit 1
     }
+
     SDKShowLine() {
         echo "==============================================================="
     }
+
+    SDKPrintFailed() {
+        printf " FAILED\n"
+    }
+
+    SDKPrintOK() {
+        printf " OK\n"
+    }
+
+
+# EOF
