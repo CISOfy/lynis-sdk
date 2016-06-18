@@ -7,6 +7,8 @@ CONFIG_FILE="config"
 MODE="do-nothing"
 MY_USER_ID=$(id -u)
 VERBOSE=0
+DEVKIT_RELEASE="20160618"
+DEVKIT_VERSION="1.0.4"
 
 # Lynis variables
 SHOW_WARNINGS_ONLY=0
@@ -82,13 +84,15 @@ done
             echo "  $0 build dpkg"
             echo "  $0 build rpm"
             echo ""
+            echo "Languages"
+            echo "  $0 update language-files"
+            echo ""
             echo "Quality Testing"
             echo "  $0 run linters"
             echo "  $0 run unit-tests"
             echo ""; echo ""
-
-
         ;;
+
         "run-linters")
             echo "Running linters"
             if [ -d ./linters ]; then
@@ -100,6 +104,7 @@ done
 
             fi
         ;;
+
         "run-unit-tests")
             FILES=$(find ./unit-tests -name "tests-*" -type f -print)
             for FILE in ${FILES}; do
@@ -109,6 +114,14 @@ done
                     echo "[X] One or more unit test failed"
                     exit 1
                 fi
+            done
+        ;;
+
+        "update-language-files")
+            FILES=$(find ./languages -name "languages-*" -type f -print)
+            for FILE in ${FILES}; do
+                . ${FILE}
+                UpdateLanguageFiles
             done
         ;;
     esac

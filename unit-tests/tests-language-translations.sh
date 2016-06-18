@@ -13,7 +13,6 @@ Assert() {
     printf "[2/${TOTAL}] en-US Translation File Exists"
     if FileExists ${LANGUAGES_DIR}/en-US; then SDKPrintOK; else SDKPrintFailed; RETVAL=1; fi
 
-
     printf "[3/${TOTAL}] Checking Coverage of Strings"
     STRINGS=$(awk -F= '{ print $1 }' ${LANGUAGES_DIR}/en-US)
 
@@ -21,7 +20,7 @@ Assert() {
     for FILE in ${FIND}; do
         if [ -f ${LANGUAGES_DIR}/${FILE} -a ! -L ${LANGUAGES_DIR}/${FILE} ]; then
             for CHECK in ${STRINGS}; do
-                STRING_EXISTS=$(grep "^${CHECK}=" ${LANGUAGES_DIR}/${FILE})
+                STRING_EXISTS=$(egrep "^(#)?${CHECK}=" ${LANGUAGES_DIR}/${FILE})
                 if [ -z "${STRING_EXISTS}" ]; then printf "\n        NOTICE: string '${CHECK}' missing in language '${FILE}'"; LANGUAGES_STRINGS_MISSING=1; fi
             done
         fi
