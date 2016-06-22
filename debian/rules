@@ -30,7 +30,9 @@ install: build
 	install -m 0755 ../lynis/plugins/custom_plugin.template $(CURDIR)/debian/lynis/etc/lynis/plugins/
 	install -m 0644 ../lynis/plugins/README $(CURDIR)/debian/lynis/etc/lynis/README
 	install -d ../lynis/db $(CURDIR)/debian/lynis/usr/share/lynis/db/
-	install -m 0644 ../lynis/db/* $(CURDIR)/debian/lynis/usr/share/lynis/db/
+	install -m 0644 ../lynis/db/*.db $(CURDIR)/debian/lynis/usr/share/lynis/db/
+	install -d ../lynis/db/languages $(CURDIR)/debian/lynis/usr/share/lynis/db/languages
+	install -m 0644 ../lynis/db/languages/* $(CURDIR)/debian/lynis/usr/share/lynis/db/languages/
 	mkdir -p ../lynis/debian/lynis/usr/share/applications/
 	#install -m 0644 ../lynis/debian/lynis.desktop $(CURDIR)/debian/lynis/usr/share/applications/
 
@@ -40,7 +42,7 @@ install: build
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs ../lynis/CHANGELOG
+	dh_installchangelogs ../lynis/CHANGELOG.md
 	dh_installdocs
 	dh_installmenu
 	dh_installman
