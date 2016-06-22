@@ -45,7 +45,7 @@
 Summary:                Security auditing tool for Linux, Mac OS X, and UNIX systems.
 Name:                   lynis
 Version:                2.2.1
-Release:                1
+Release:                2
 License:                GPL
 Group:                  Applications/System
 Source:                 lynis-%{version}.tar.gz
@@ -101,7 +101,9 @@ install -d ${RPM_BUILD_ROOT}%{_pluginsdir}
 install plugins/* ${RPM_BUILD_ROOT}%{_pluginsdir}
 # Install database files
 install -d ${RPM_BUILD_ROOT}%{_dbdir}
-install db/* ${RPM_BUILD_ROOT}%{_dbdir}
+install -d ${RPM_BUILD_ROOT}%{_dbdir}/languages
+install db/*.db ${RPM_BUILD_ROOT}%{_dbdir}
+install db/languages/* ${RPM_BUILD_ROOT}%{_dbdir}/languages
 
 # Bash completion
 mkdir -p %{RPM_BUILD_ROOT}%{_bashcompdir}
@@ -115,7 +117,7 @@ install -pm644 extras/bash_completion.d/lynis %{RPM_BUILD_ROOT}%{_bashcompdir}/
 # Binaries
 %attr(755, root, root) %{_bindir}/lynis
 # Documentation and lynis(8) man page
-%doc CHANGELOG FAQ LICENSE README
+%doc CHANGELOG.md FAQ LICENSE README
 %doc %{_mandir}/man8/lynis.8.gz
 # Default profile
 /etc/lynis/default.prf
@@ -129,6 +131,9 @@ install -pm644 extras/bash_completion.d/lynis %{RPM_BUILD_ROOT}%{_bashcompdir}/
 #%attr(644, root, root) %{_plugindir}/*
 
 %changelog
+* Tue Jun 22 2016 Michael Boelen - 2.2.1-2
+- Added languages directory and renamed changelog
+
 * Tue Jun 07 2016 Michael Boelen - 2.2.1-1
 - Adjusted comments
 
