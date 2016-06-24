@@ -11,7 +11,7 @@
         #apt-get install debhelper
         #dpkgbuild-package -us -uc -b
         echo "Building DPKG"
-        dpkg-buildpackage -b
+        dpkg-buildpackage -b -us -uc
         echo " ----"
     }
 
