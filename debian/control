@@ -7,7 +7,7 @@ Standards-Version: 3.9.2
 Homepage: https://cisofy.com/lynis/
 
 Package: lynis
-Architecture: any
+Architecture: all
 Depends: ${misc:Depends}
 Recommends: menu
 Suggests: dnsutils
