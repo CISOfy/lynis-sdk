@@ -1,6 +1,12 @@
+lynis (2.2.1-2) utopic; urgency=low
+
+  * Bump to reflect new building options
+
+ -- Michael Boelen <michael.boelen@cisofy.com>  Fri, 24 Jun 2016 14:47:02 +0200
+
 lynis (2.2.1-1) utopic; urgency=low
 
-  * Release 2.2.1
+  * Development release 2.2.1
 
  -- Michael Boelen <michael.boelen@cisofy.com>  Mon, 9 May 2016 15:03:22 +0200
 
