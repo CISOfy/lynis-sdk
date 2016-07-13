@@ -44,8 +44,8 @@
 
 Summary:                Security auditing tool for Linux, Mac OS X, and UNIX systems.
 Name:                   lynis
-Version:                2.2.1
-Release:                2
+Version:                2.3.0
+Release:                1
 License:                GPL
 Group:                  Applications/System
 Source:                 lynis-%{version}.tar.gz
@@ -131,6 +131,9 @@ install -pm644 extras/bash_completion.d/lynis %{RPM_BUILD_ROOT}%{_bashcompdir}/
 #%attr(644, root, root) %{_plugindir}/*
 
 %changelog
+* Wed Jul 13 2016 Michael Boelen - 2.3.0-1
+- New release 2.3.0
+
 * Tue Jun 22 2016 Michael Boelen - 2.2.1-2
 - Added languages directory and renamed changelog
 
