@@ -1,0 +1,17 @@
+Package: lynis
+Version: 2.2.1-1
+Architecture: amd64
+Maintainer: CISOfy <software@cisofy.com>
+Installed-Size: 1094
+Recommends: menu
+Suggests: dnsutils
+Section: utils
+Priority: optional
+Homepage: https://cisofy.com/lynis/
+Description: security auditing tool for Linux systems
+ Lynis is an auditing tool for systems running Linux, Mac OS X,
+ BSD, or any other UNIX-based operating system. It helps with
+ discovering configuration issues and implementing best practices.
+ .
+ Lynis can be used in addition to other software, like security
+ scanners, system benchmarking and fine-tuning tools.

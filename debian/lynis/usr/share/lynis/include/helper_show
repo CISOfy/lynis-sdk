@@ -1,0 +1,215 @@
+#!/bin/sh
+
+#################################################################################
+#
+#   Lynis
+# ------------------
+#
+# Copyright 2007-2013, Michael Boelen
+# Copyright 2013-2016, CISOfy
+#
+# Website  : https://cisofy.com
+# Blog     : http://linux-audit.com
+# GitHub   : https://github.com/CISOfy/lynis
+#
+# Lynis comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+# welcome to redistribute it under the terms of the GNU General Public License.
+# See LICENSE file for usage of this software.
+#
+######################################################################
+#
+# Helper program to share details
+#
+######################################################################
+#
+# How to use:
+# ------------
+# Run: lynis show <option>
+#
+######################################################################
+
+COMMANDS="audit show update"
+HELPERS="audit configure show update"
+OPTIONS="--auditor\n--check-all (-c)\n--config\n--cronjob (--cron)\n--debug\n--developer\n--help (-h)\n--info\n--license-key --log-file\n--manpage_(--man)\n--no-colors --no-log\n--pentest\n--profile\n--plugins-dir\n--quiet (-q)\n--quick (-Q)\n--report-file\n--reverse-colors\n--tests\n--tests-category\n--upload\n--verbose\n--version (-V)\n--view-categories"
+
+SHOW_ARGS="commands dbdir help hostids includedir license man options pidfile plugindir profiles release releasedate tests version workdir"
+SHOW_HELP="lynis show ${BROWN}commands${NORMAL}          (all available commands)
+lynis show ${BROWN}dbdir${NORMAL}             (database directory)
+lynis show ${BROWN}help${NORMAL}              (detailed information about arguments)
+lynis show ${BROWN}hostids${NORMAL}           (unique IDs for this system)
+lynis show ${BROWN}includedir${NORMAL}        (include directory for tests and functions)
+lynis show ${BROWN}license${NORMAL}           (license details)
+lynis show ${BROWN}man${NORMAL}               (show help)
+lynis show ${BROWN}options${NORMAL}           (available flags and options)
+lynis show ${BROWN}pidfile${NORMAL}           (active file to stored process ID)
+lynis show ${BROWN}plugindir${NORMAL}         (directory with plugins)
+lynis show ${BROWN}profiles${NORMAL}          (discovered profiles)
+lynis show ${BROWN}release${NORMAL}           (version)
+lynis show ${BROWN}releasedate${NORMAL}       (date of release)
+lynis show ${BROWN}tests skipped${NORMAL}     (which tests to skip according profile)
+lynis show ${BROWN}version${NORMAL}           (${PROGRAM_NAME} version)
+lynis show ${BROWN}workdir${NORMAL}           (work directory)"
+
+AUDIT_ARGS="( dockerfile | system )"
+AUDIT_HELP="
+  ${WHITE}lynis audit <target>${NORMAL}
+
+  ${CYAN}audit dockerfile ${BROWN}<file>${NORMAL}
+
+  Perform security audit on a Docker build file
+  ${GRAY}Example:${NORMAL}
+    lynis audit dockerfile Dockerfile
+
+
+  ${CYAN}audit system ${GRAY}[options]${NORMAL}
+
+  Perform security system audit
+
+  ${GRAY}Examples:${NORMAL}
+    lynis audit system
+    lynis audit system --cronjob
+    lynis audit system --profile developer.prf
+    lynis audit system --quick
+
+
+  ${CYAN}audit system remote ${BROWN}<target> ${GRAY}[options]${NORMAL}
+
+  Perform security system audit on a remote target
+
+  ${GRAY}Examples:${NORMAL}
+    lynis audit system remote 192.168.1.100
+    lynis audit system remote 192.168.1.100 --no-colors
+
+"
+
+UPDATE_ARGS="info release"
+UPDATE_HELP="
+  ${CYAN}update info${NORMAL}
+
+  Check version information
+
+
+  ${CYAN}update release${NORMAL}
+
+  Perform update of release
+
+"
+
+SHOW_TESTS_ARGS="skipped"
+
+COMMANDS_AUDIT_SYSTEM_USAGE="Usage: lynis audit system"
+COMMANDS_AUDIT_SYSTEM_FUNCTION="Function: performs a security audit of the system"
+
+if [ $# -gt 0 ]; then
+    case $1 in
+        "commands")
+            if [ $# -eq 1 ]; then
+                ${ECHOCMD} "\n${WHITE}Commands:${NORMAL}"
+                for I in ${COMMANDS}; do
+                    ${ECHOCMD} "lynis ${CYAN}${I}${NORMAL}"
+                done
+                ${ECHOCMD} ""
+              else
+                shift
+                if [ $# -eq 1 ]; then
+                    case $1 in
+                        "audit") ${ECHOCMD} "${AUDIT_HELP}" ;;
+                        "show") ${ECHOCMD} "${SHOW_HELP}" ;;
+                        *) ${ECHOCMD} "Unknown argument for 'commands'"
+                    esac
+                  else
+                    shift
+                    case $1 in
+                        "dockerfile")
+                            ${ECHOCMD} "Usage: lynis audit dockerfile <file>"
+                        ;;
+                        "system")
+                            ${ECHOCMD} "${COMMANDS_AUDIT_SYSTEM_USAGE}\n${COMMANDS_AUDIT_SYSTEM_FUNCTION}\n"
+                        ;;
+                        *)
+                            ${ECHOCMD} "Unknown argument for 'commands'"
+                        ;;
+                    esac
+                fi
+            fi
+            ;;
+        "dbdir")
+            ${ECHOCMD} "${DBDIR}"
+            ;;
+        "help")
+            if [ $# -eq 1 ]; then
+                ${ECHOCMD} "${PROGRAM_NAME} ${PROGRAM_VERSION} - Help"
+                ${ECHOCMD} "=========================="
+                ${ECHOCMD} ""
+                ${ECHOCMD} "${WHITE}Commands${NORMAL}:"
+                for I in ${COMMANDS}; do
+                    ${ECHOCMD} "${CYAN}${I}${NORMAL}"
+                done
+                ${ECHOCMD} ""
+                ${ECHOCMD} "Use 'lynis show help ${CYAN}<command>${NORMAL}' to see details"
+                ${ECHOCMD} ""; ${ECHOCMD} ""
+                ${ECHOCMD} "${WHITE}Options${NORMAL}:\n${GRAY}${OPTIONS}${NORMAL}"
+              else
+                shift
+                case $1 in
+                   "audit") ${ECHOCMD} "${AUDIT_HELP}" ;;
+                   "show") ${ECHOCMD} "${SHOW_HELP}" ;;
+                   "update") ${ECHOCMD} "${UPDATE_HELP}" ;;
+                   "?") ${ECHOCMD} "${SHOW_ARGS}" ;;
+                   *) ${ECHOCMD} "Invalid argument provided for lynis show help" ;;
+                esac
+            fi
+            ;;
+        "helpers")              for I in ${HELPERS}; do ${ECHOCMD} ${I}; done ;;
+        "hostids" | "hostid")
+            ${ECHOCMD} "hostid=${HOSTID}"
+            ${ECHOCMD} "hostid2=${HOSTID2}"
+            ;;
+        "includedir")
+            ${ECHOCMD} "${INCLUDEDIR}"
+            ;;
+        "license")              ${ECHOCMD} "${PROGRAM_LICENSE}" ;;
+        "man")                  ${ECHOCMD} "Use ./lynis --man or man lynis" ;;
+        "options")              ${ECHOCMD} "${OPTIONS}" ;;
+        "pidfile")              ${ECHOCMD} "${PIDFILE}" ;;
+        "profile" | "profiles") for I in ${PROFILES}; do ${ECHOCMD} ${I}; done ;;
+        "profiledir")           ${ECHOCMD} "${PROFILEDIR}" ;;
+        "plugindir")            ${ECHOCMD} "${PLUGINDIR}" ;;
+        "release")              ${ECHOCMD} "${PROGRAM_VERSION}-${PROGRAM_RELEASE_TYPE}" ;;
+        "releasedate")          ${ECHOCMD} "${PROGRAM_RELEASE_DATE}" ;;
+        "tests")
+            if [ $# -gt 0 ]; then
+                shift
+                case $1 in
+                   "skipped") ${ECHOCMD} "${SKIP_TESTS}" ;;
+                   *)
+                       ${ECHOCMD} "Invalid argument provided to lynis show tests\n\n"
+                       ${ECHOCMD} "Suggestions:\n"
+                       for I in ${SHOW_TESTS_ARGS}; do ${ECHOCMD} "lynis show tests ${I}"; done
+                   ;;
+                esac
+              else
+                ${ECHOCMD} "Need more arguments"
+            fi
+            ;;
+        "version")              ${ECHOCMD} "${PROGRAM_VERSION}" ;;
+        "workdir")              ${ECHOCMD} "${WORKDIR}" ;;
+        "?")                    ${ECHOCMD} "${SHOW_ARGS}" ;;
+        *)                      ${ECHOCMD} "Unknown argument '$1'" ;;
+    esac
+  else
+    ${ECHOCMD} "\n  ${WHITE}Provide an additional argument${NORMAL}\n\n"
+    for I in ${SHOW_ARGS}; do
+        ${ECHOCMD} "    lynis show ${BROWN}${I}${NORMAL}"
+    done
+    ${ECHOCMD} "\n"
+fi
+
+
+ExitClean
+
+# More additions:
+# - categories
+# - workdir
+
+# The End
