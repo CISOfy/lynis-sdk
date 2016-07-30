@@ -3,6 +3,7 @@
 #set -e
 set -u
 
+
 CONFIG_FILE="config"
 MODE="do-nothing"
 MY_USER_ID=$(id -u)
@@ -19,6 +20,7 @@ YELLOW=""
 NORMAL=""
 SECTION="${YELLOW}"
 LOGFILE="./lynis-dev.log"
+DISPLAY_LANG="$LANG"
 
 if [ "${MY_USER_ID}" = "0" ]; then echo "Do not run this as root"; exit 1; fi
 if [ ! -f "${CONFIG_FILE}" ]; then echo "Could not open config file: ${CONFIG_FILE}"; exit 1; fi
