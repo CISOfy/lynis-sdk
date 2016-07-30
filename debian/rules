@@ -28,7 +28,7 @@ install: build
 	install -m 0644 ../lynis/include/* $(CURDIR)/debian/lynis/usr/share/lynis/include/
 	install -d ../lynis/plugins/ $(CURDIR)/debian/lynis/usr/share/lynis/plugins/
 	install -m 0755 ../lynis/plugins/custom_plugin.template $(CURDIR)/debian/lynis/usr/share/lynis/plugins/
-	install -m 0644 ../lynis/plugins/README $(CURDIR)/debian/lynis/etc/lynis/README
+	install -m 0644 ../lynis/plugins/README $(CURDIR)/debian/lynis/usr/share/lynis/plugins/README
 	install -d ../lynis/db $(CURDIR)/debian/lynis/usr/share/lynis/db/
 	install -m 0644 ../lynis/db/*.db $(CURDIR)/debian/lynis/usr/share/lynis/db/
 	install -d ../lynis/db/languages $(CURDIR)/debian/lynis/usr/share/lynis/db/languages
