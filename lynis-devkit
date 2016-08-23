@@ -90,9 +90,22 @@ done
             echo "  $0 update language-files"
             echo ""
             echo "Quality Testing"
+            echo "  $0 run checks"
             echo "  $0 run linters"
             echo "  $0 run unit-tests"
             echo ""; echo ""
+        ;;
+
+        "run-checks")
+            FILES=$(find ./checks -name "check-*" -type f -print)
+            for FILE in ${FILES}; do
+                . ${FILE}
+                Assert
+                if [ $? -gt 0 ]; then
+                    echo "[X] One or more checks failed"
+                    exit 1
+                fi
+            done
         ;;
 
         "run-linters")
@@ -103,7 +116,6 @@ done
                     InsertSection "Linter - ${FILE}"
                     . ${FILE}
                 done
-
             fi
         ;;
 

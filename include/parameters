@@ -34,6 +34,9 @@
             run)
                 if [ $# -ge 2 ]; then
                     case $2 in
+                        "checks")
+                            MODE="run-checks"
+                        ;;
                         "linters")
                             MODE="run-linters"
                         ;;
@@ -49,6 +52,7 @@
                     echo "Error: Need a target to run"
                     echo " "
                     echo "Examples:"
+                    echo "$0 run checks"
                     echo "$0 run linters"
                     echo "$0 run tests"
                     exit 1
