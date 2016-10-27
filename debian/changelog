@@ -1,14 +1,20 @@
+lynis (2.4.0-1) utopic; urgency=low
+
+  * Release 2.4.0
+
+ -- Michael Boelen <michael.boelen@cisofy.com>  Thu, 27 Oct 2016 12:48:36 +0200
+
 lynis (2.3.4-2) utopic; urgency=low
 
   * Release 2.3.4 renewal
 
- -- Michael Boelen <michael.boelen@cisofy.com>  Tue, 29 Sep 2016 13:09:43 +0200
+ -- Michael Boelen <michael.boelen@cisofy.com>  Thu, 29 Sep 2016 13:09:43 +0200
 
 lynis (2.3.4-1) utopic; urgency=low
 
   * Release 2.3.4
 
- -- Michael Boelen <michael.boelen@cisofy.com>  Tue, 29 Sep 2016 12:25:17 +0200
+ -- Michael Boelen <michael.boelen@cisofy.com>  Thu, 29 Sep 2016 12:25:17 +0200
 
 lynis (2.3.3-1) utopic; urgency=low
 
@@ -26,7 +32,7 @@ lynis (2.3.1-1) utopic; urgency=low
 
   * Release 2.3.1
 
- -- Michael Boelen <michael.boelen@cisofy.com>  Wed, 14 Jul 2016 20:14:56 +0200
+ -- Michael Boelen <michael.boelen@cisofy.com>  Thu, 14 Jul 2016 20:14:56 +0200
 
 lynis (2.3.0-1) utopic; urgency=low
 
