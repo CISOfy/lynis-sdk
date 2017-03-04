@@ -22,7 +22,7 @@
 #
 #################################################################################
 #
-# Copyright 2007-2016, CISOfy
+# Copyright 2007-2017, CISOfy
 #
 # Documentation: https://cisofy.com/documentation/lynis/upgrading/
 #
@@ -45,7 +45,7 @@
 Summary:                Security auditing tool for Linux, Mac OS X, and UNIX systems.
 Name:                   lynis
 Version:                2.4.4
-Release:                1
+Release:                2
 License:                GPL
 Group:                  Applications/System
 Source:                 lynis-%{version}.tar.gz
@@ -98,7 +98,7 @@ install -d ${RPM_BUILD_ROOT}%{_includedir}
 install include/* ${RPM_BUILD_ROOT}%{_includedir}
 # Install plugins
 install -d ${RPM_BUILD_ROOT}%{_pluginsdir}
-install plugins/* ${RPM_BUILD_ROOT}%{_pluginsdir}
+install plugins/README ${RPM_BUILD_ROOT}%{_pluginsdir}
 # Install database files
 install -d ${RPM_BUILD_ROOT}%{_dbdir}
 install -d ${RPM_BUILD_ROOT}%{_dbdir}/languages
