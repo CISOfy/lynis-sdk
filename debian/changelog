@@ -1,3 +1,9 @@
+lynis (2.4.8-1) utopic; urgency=low
+
+  * Release 2.4.8
+
+ -- Michael Boelen <michael.boelen@cisofy.com>  Wed, 29 Mar 2017 17:12:27 +0200
+
 lynis (2.4.7-1) utopic; urgency=low
 
   * Release 2.4.7
