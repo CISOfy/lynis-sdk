@@ -1,7 +1,7 @@
 #!/bin/sh
 
 RETVAL=0
-TOTAL=2
+TOTAL=3
 
 Assert() {
 
@@ -10,9 +10,11 @@ Assert() {
     echo "- Output -"
     grep "Register " ${LYNIS_PATH}/include/tests_* | grep "\-\-preqs-met" | grep -v "\-\-skip\-reason" | awk '{ print "Test "$4" in "$1 }'
 
-    #if DirectoryExists .; then printf "OK\n"; else printf "FAILED\n"; RETVAL=1; fi
-    #printf "[2/${TOTAL}] DirectoryExists (invalid directory) "
-    #if ! DirectoryExists non-existing-dir; then printf "OK\n"; else printf "FAILED\n"; RETVAL=1; fi
+    printf "[2/${TOTAL}] Spacing for 'else' should be multitude of 4 - Any results should be checked"
+    grep -R "else" ${LYNIS_PATH} | grep -v "then" | awk -F '//' '{ n = gsub(/ /, "", $1); print $1" "n }' | awk '{ if ($2 %4 > 0) { print $1" "$2}}'
+
+    printf "[3/${TOTAL}] Any counter should be named COUNTER (instead of N)"
+    grep -R " N=0" ${LYNIS_PATH}
 
     return ${RETVAL}
 }
