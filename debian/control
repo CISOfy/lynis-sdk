@@ -9,12 +9,13 @@ Homepage: https://cisofy.com/lynis/
 Package: lynis
 Architecture: all
 Depends: ${misc:Depends}
-Recommends: menu
 Suggests: dnsutils
-Description: security auditing tool for Linux systems
- Lynis is an auditing tool for systems running Linux, Mac OS X,
- BSD, or any other UNIX-based operating system. It helps with
+Description: security tool to audit systems running Linux, macOS, and Unix
+ Lynis is an auditing tool for systems running Linux, macOS,
+ BSD, or any other Unix-based operating system. It helps with
  discovering configuration issues and implementing best practices.
  .
- Lynis can be used in addition to other software, like security
- scanners, system benchmarking and fine-tuning tools.
+ Lynis is typically used to find vulnerabilities in software,
+ configuration settings of applications, or system files. The tool
+ can be used in addition to other software, like security scanners
+ and system monitoring tools.
