@@ -44,7 +44,7 @@
 
 Summary:                Security tool to audit systems running Linux, macOS, and Unix.
 Name:                   lynis
-Version:                2.5.4
+Version:                2.5.5
 Release:                1
 License:                GPL
 Group:                  Applications/System
