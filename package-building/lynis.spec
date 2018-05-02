@@ -22,9 +22,9 @@
 #
 #################################################################################
 #
-# Copyright 2007-2017, CISOfy
-#
-# Documentation: https://cisofy.com/documentation/lynis/upgrading/
+# Project page:              https://cisofy.com/lynis/
+# Documentation:             https://cisofy.com/documentation/lynis/upgrading/
+# Software development kit:  https://github.com/CISOfy/lynis-sdk
 #
 #################################################################################
 
@@ -44,7 +44,7 @@
 
 Summary:                Security tool to audit systems running Linux, macOS, and Unix.
 Name:                   lynis
-Version:                2.6.3
+Version:                2.6.4
 Release:                100
 License:                GPL
 Group:                  Applications/System
