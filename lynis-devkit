@@ -1,15 +1,14 @@
 #!/bin/sh
 
-#set -e
-set -u
+set -o nounset
 
 
 CONFIG_FILE="config"
 MODE="do-nothing"
 MY_USER_ID=$(id -u)
 VERBOSE=0
-DEVKIT_RELEASE="20160618"
-DEVKIT_VERSION="1.0.4"
+DEVKIT_RELEASE="20190917"
+DEVKIT_VERSION="1.0.5"
 
 # Lynis variables
 SHOW_WARNINGS_ONLY=0
@@ -37,6 +36,7 @@ LYNIS_VERSION=$(grep "PROGRAM_VERSION=" ${LYNIS_PATH}/lynis | awk -F= '{print $2
 
 
 echo "======================================================================"
+echo "Development kit:        ${DEVKIT_VERSION} [${DEVKIT_RELEASE}]"
 echo "Lynis directory:        ${LYNIS_PATH}"
 echo "Lynis version:          ${LYNIS_VERSION}"
 echo "Verbose:                $VERBOSE"
@@ -65,12 +65,12 @@ done
 
     case ${MODE} in
         "build-all")
-            SDKBuildPackageDPKG
+            SDKBuildPackageDEB
             SDKBuildPackageRPM
         ;;
 
-        "build-dpkg")
-            SDKBuildPackageDPKG
+        "build-deb" | "build-dpkg")
+            SDKBuildPackageDEB
         ;;
 
         "build-rpm")
@@ -84,7 +84,7 @@ done
             echo "============================="
             echo ""
             echo "Build Packages"
-            echo "  $0 build dpkg"
+            echo "  $0 build deb"
             echo "  $0 build rpm"
             echo ""
             echo "Languages"
