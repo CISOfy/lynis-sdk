@@ -13,8 +13,8 @@ DATAFILE=$(mktemp /tmp/lynis-strings.XXXXXXXXXX)
 DATAFILE_SORTED=$(mktemp /tmp/lynis-strings-sorted.XXXXXXXXXX)
 
 echo "Temporary file: ${DATAFILE}"
-strings /data/development/lynis/lynis > ${DATAFILE}
-find /data/development/lynis/include -type f -exec strings {} \; | tr ' ' '\n' >> ${DATAFILE}
+strings ../lynis/lynis > "${DATAFILE}"
+find ../lynis/include -type f -exec strings {} \; | tr ' ' '\n' >> "${DATAFILE}"
 
 
 # tr    delete quotes (disabled) #    tr -d "'" | \
