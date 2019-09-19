@@ -32,7 +32,7 @@ find ../lynis/include -type f -exec strings {} \; | tr ' ' '\n' >> "${DATAFILE}"
 # sort  sort and only store unique words
 
 
-cat ${DATAFILE} | \
+cat "${DATAFILE}" | \
     tr '=' ' ' | \
     tr '/' ' ' | \
     grep -E "^[a-zA-Z]{4,}" | \
@@ -45,9 +45,9 @@ cat ${DATAFILE} | \
     awk '{if ($2 <= 1) { print $1 }}' | \
     grep -E "^[a-zA-Z]{4,}" | \
     tr '[:upper:]' '[:lower:]' | \
-    sort --unique > ${DATAFILE_SORTED}
+    sort --unique > "${DATAFILE_SORTED}"
 
-aspell --lang=en --ignore-case --personal=./grammar/words-to-ignore.en.pws check ${DATAFILE_SORTED}
+aspell --lang=en --ignore-case --personal=./grammar/words-to-ignore.en.pws check "${DATAFILE_SORTED}"
 
-if [ -f ${DATAFILE} ]; then rm ${DATAFILE}; fi
-if [ -f ${DATAFILE_SORTED} ]; then rm ${DATAFILE_SORTED}; fi
+if [ -f "${DATAFILE}" ]; then rm "${DATAFILE}"; fi
+if [ -f "${DATAFILE_SORTED}" ]; then rm "${DATAFILE_SORTED}"; fi
