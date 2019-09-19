@@ -57,7 +57,7 @@
                     echo "Examples:"
                     echo "$0 run checks"
                     echo "$0 run linters"
-                    echo "$0 run tests"
+                    echo "$0 run unit-tests"
                     exit 1
                 fi
             ;;
@@ -87,4 +87,3 @@
         esac
         shift
     done
-
