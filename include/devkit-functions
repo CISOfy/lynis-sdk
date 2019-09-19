@@ -35,7 +35,7 @@
     }
 
     SDKExitFatal() {
-        echo "$1"
+        echo "Fatal error: $1"
         exit 1
     }
 
