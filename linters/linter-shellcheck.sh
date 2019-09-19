@@ -1,11 +1,5 @@
 #!/bin/sh
 
-
-# apt-get install cabal-install
-# cabal-update
-# cabal-install
-
-
 # Lynis work flow
 
 # lynis
@@ -25,8 +19,6 @@
 # include/tool_tips
 # include/data_upload
 
-
-
 if ! which shellcheck 2> /dev/null; then
     echo "Could not find shellcheck - install it first and add it to your path"
     echo ""
@@ -35,13 +27,9 @@ if ! which shellcheck 2> /dev/null; then
     exit 1
 fi
 
-# Future research: increase memory size
-# +RTS -K100000000 -RTS
-
-# SC1090: Can't follow non-constant source. Use a directive to specify location.
-# We already use a monolithic file
-
-
+#
+# Work in Progress (WIP)
+#
 # Let's craft a single monolithic file that mimics a modular Lynis
 # Notes:
 # - Do things as much as possible in the same order due to variable assignments
@@ -69,14 +57,21 @@ fi
 
 # Run the shellcheck analysis
 
-excluded_tests="SC1090,SC2006,SC2012,SC2016,SC2028,SC2034,SC2039,SC2063,SC2086,SC2166"
+excluded_tests="SC1090,SC2006,SC2012,SC2016,SC2028,SC2034,SC2039,SC2063,SC2086,SC2166,SC2181"
+
+# SC1090: Can't follow non-constant source. Use a directive to specify location.
+# We already use a monolithic file
+
+# SC2181: Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.
+# Usually we don't care about output of commands. Disabled for now, revisit in future
+
 
 # --check-sourced also shows warnings in included files
 # --source-path defines where included files can be found
 # --external-sources allows files that are not part of the path
 
 
-shellcheck--check-sourced --source-path=../lynis/db:../lynis/include --shell=sh --exclude=${excluded_tests} ../lynis/lynis
+shellcheck --check-sourced --source-path=../lynis/db:../lynis/include --shell=sh --exclude=${excluded_tests} ../lynis/lynis ../lynis/include/*
 
 
 #EOF
