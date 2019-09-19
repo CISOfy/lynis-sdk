@@ -3,7 +3,11 @@
 set -o nounset
 #set -o pipefail
 
-if ! command -v aspell > /dev/null; then SDKExitFatal "Missing aspell utility"; fi
+if ! command -v aspell > /dev/null; then
+    SDKExitFatal "Missing aspell utility"
+elif ! aspell dump dicts | grep -qw "en$" > /dev/null ; then
+    SDKExitFatal "Missing aspell English dictionary (aspell-en)"
+fi
 
 DATAFILE=$(mktemp /tmp/lynis-strings.XXXXXXXXXX)
 DATAFILE_SORTED=$(mktemp /tmp/lynis-strings-sorted.XXXXXXXXXX)
@@ -47,5 +51,3 @@ aspell --lang=en --ignore-case --personal=./grammar/words-to-ignore.en.pws check
 
 if [ -f ${DATAFILE} ]; then rm ${DATAFILE}; fi
 if [ -f ${DATAFILE_SORTED} ]; then rm ${DATAFILE_SORTED}; fi
-
-
