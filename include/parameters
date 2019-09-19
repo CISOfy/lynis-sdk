@@ -40,6 +40,9 @@
                         "linters")
                             MODE="run-linters"
                         ;;
+                        "spelling-check")
+                            MODE="run-spelling-check"
+                        ;;
                         "unit-tests")
                             MODE="run-unit-tests"
                         ;;

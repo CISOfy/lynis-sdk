@@ -78,7 +78,6 @@ done
         ;;
 
         "do-nothing")
-
             echo ""; echo ""
             echo "Help"
             echo "============================="
@@ -93,6 +92,7 @@ done
             echo "Quality Testing"
             echo "  $0 run checks"
             echo "  $0 run linters"
+            echo "  $0 run spelling-check"
             echo "  $0 run unit-tests"
             echo ""; echo ""
         ;;
@@ -118,6 +118,10 @@ done
                     . ${FILE}
                 done
             fi
+        ;;
+
+        "run-spelling-check")
+            . ./grammar/grammar-check-spelling
         ;;
 
         "run-unit-tests")
