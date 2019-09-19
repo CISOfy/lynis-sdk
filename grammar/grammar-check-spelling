@@ -3,6 +3,8 @@
 set -o nounset
 #set -o pipefail
 
+if ! command -v aspell > /dev/null; then SDKExitFatal "Missing aspell utility"; fi
+
 DATAFILE=$(mktemp /tmp/lynis-strings.XXXXXXXXXX)
 DATAFILE_SORTED=$(mktemp /tmp/lynis-strings-sorted.XXXXXXXXXX)
 
@@ -10,37 +12,37 @@ echo "Temporary file: ${DATAFILE}"
 strings /data/development/lynis/lynis > ${DATAFILE}
 find /data/development/lynis/include -type f -exec strings {} \; | tr ' ' '\n' >> ${DATAFILE}
 
-# 1) Get all words 4 characters or more
-# 2) delete single quote, replace variable assignments with an equals sign
-# 3) strip out unwanted characters
-# 4) replace spaces so multiple words on one line are separated
-# 5) grep: ignore everything starting with 3 capitals such as variables
-# 6) sort: get unique words and store in new file
 
-# awk count number of capitals by doing a replacement and showing word + count
-# awk only show items that have one capital max
-# grep another run to get rid of very short words
-# sort get unique words
+# tr    delete quotes (disabled) #    tr -d "'" | \
+# tr    split key/value pairs
+# tr    split words or paths
+# grep  get all words 4 characters or more
+# sed   strip out unwanted characters
+# grep  ignore uppercase words (2 or more capitals)
+# grep  ignore words with underscores (most likely variables)
+# grep  ignore words with dots
+# awk   count number of capitals by doing a replacement and showing word + count
+# awk   only show items that have one capital max
+# grep  another run to get rid of very short words
+# tr    turn all words into lowercase before sorting
+# sort  sort and only store unique words
+
+
 cat ${DATAFILE} | \
-    tr -d "'" | \
     tr '=' ' ' | \
+    tr '/' ' ' | \
     grep -E "^[a-zA-Z]{4,}" | \
     sed -e 's/[|?#,:"\{\}\$=\(\)\;\/]//g' | \
     tr ' ' '\n' | \
-    grep -E -v "^[A-Z]{3,}" | \
+    grep -E -v "^[A-Z]{2,}" | \
     grep -v "_" | \
     grep -v "\." | \
     awk '{print $1,gsub("[A-Z]","")}' | \
     awk '{if ($2 <= 1) { print $1 }}' | \
     grep -E "^[a-zA-Z]{4,}" | \
+    tr '[:upper:]' '[:lower:]' | \
     sort --unique > ${DATAFILE_SORTED}
 
-# | sort --unique ${DATAFILE} > ${DATAFILE_SORTED}
-
-
-#less $DATAFILE_SORTED
-# -o ordinary text
-#ispell -o -S ${DATAFILE_SORTED}
 aspell --lang=en --ignore-case --personal=./grammar/words-to-ignore.en.pws check ${DATAFILE_SORTED}
 
 if [ -f ${DATAFILE} ]; then rm ${DATAFILE}; fi
