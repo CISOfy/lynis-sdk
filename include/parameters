@@ -11,20 +11,19 @@
                         "all")
                             MODE="build-all"
                         ;;
-                        "dpkg")
-                            MODE="build-dpkg"
+                        "deb" | "dpkg")
+                            MODE="build-deb"
                         ;;
                         "rpm")
                             MODE="build-rpm"
                         ;;
-
                     esac
-                  else
+                else
                     echo "Error: Need a target to run"
                     echo " "
                     echo "Examples:"
                     echo "$0 build all"
-                    echo "$0 build dpkg"
+                    echo "$0 build deb"
                     echo "$0 build rpm"
                     exit 1
                 fi
